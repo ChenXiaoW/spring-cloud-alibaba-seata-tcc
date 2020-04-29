@@ -1,0 +1,4 @@
+Product:
+  serviceName: product-service
+  queryProductById: /api/product/queryProductById
+  updateProductStock: /api/product/updateProductStock
