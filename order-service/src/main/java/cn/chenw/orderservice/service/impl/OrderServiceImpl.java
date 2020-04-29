@@ -6,6 +6,7 @@ import cn.chenw.commonservice.model.poto.Order;
 import cn.chenw.commonservice.model.poto.Product;
 import cn.chenw.commonservice.util.CodeConstant;
 
+import cn.chenw.orderservice.action.OrderAction;
 import cn.chenw.orderservice.dao.OrderDao;
 import cn.chenw.orderservice.manager.ProductFeignManager;
 import cn.chenw.orderservice.service.OrderService;
@@ -18,6 +19,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
@@ -33,6 +35,9 @@ public class OrderServiceImpl implements OrderService {
 	OrderDao orderDao;
 
 	@Autowired
+	OrderAction orderAction;
+
+	@Autowired
 	ProductFeignManager productFeignManager;
 
 	/**
@@ -43,6 +48,7 @@ public class OrderServiceImpl implements OrderService {
 	 */
 	@Override
 	@GlobalTransactional
+	@Transactional
 	public BaseModel createOrder(CreateOrderDTO createOrderDTO) {
 		log.info("xid：{}", RootContext.getXID());
 		//查询商品信息
@@ -61,10 +67,17 @@ public class OrderServiceImpl implements OrderService {
 		order.setTotalprice(totalPrice);
 		order.setPname(product.getPname());
 		//生成订单
-		Integer integer = orderDao.insertOrder(order);
-		if (integer == 0) {
+		//
+		boolean prepare = orderAction.prepare(order);
+		if (!prepare) {
 			return new BaseModel(CodeConstant.UPDATE_ERROR, CodeConstant.FAIL, "创建订单失败", null);
 		}
+
+		//todo 这里可以直接用at模式，不需要action下的方法
+		/*Integer integer = orderDao.insertOrder(order);
+		if (integer == 0) {
+			return new BaseModel(CodeConstant.UPDATE_ERROR, CodeConstant.FAIL, "创建订单失败", null);
+		}*/
 		//库存扣减
 		Integer number = product.getStock() - order.getCount();
 		product.setStock(number);
