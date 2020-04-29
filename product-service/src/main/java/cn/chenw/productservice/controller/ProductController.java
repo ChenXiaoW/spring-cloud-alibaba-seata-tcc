@@ -2,6 +2,8 @@ package cn.chenw.productservice.controller;
 
 import cn.chenw.commonservice.model.BaseModel;
 import cn.chenw.commonservice.model.poto.Product;
+import cn.chenw.productservice.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/product")
 public class ProductController {
 
-
+    @Autowired
+    ProductService productService;
 
     /**
      * 查询商品信息
@@ -25,7 +28,7 @@ public class ProductController {
      */
     @PostMapping("/queryProductById")
     BaseModel queryProductById(@RequestBody Product product){
-        return null;
+        return productService.queryProductById(product);
     }
 
     /**
@@ -36,6 +39,6 @@ public class ProductController {
      */
     @PostMapping("/updateProductStock")
     BaseModel updateProductStock(@RequestBody Product product){
-        return null;
+        return productService.updateProductStock(product);
     }
 }

@@ -1,5 +1,5 @@
 server:
-  port: 9998
+  port: 9997
 spring:
   application:
     name: order-service
@@ -16,37 +16,37 @@ spring:
       max-active: 10
       initial-size: 4
       max-wait: 600
-      # ÓÃÀ´¼ì²âÁ¬½ÓÊÇ·ñÓĞĞ§µÄsql£¬ÒªÇóÊÇÒ»¸ö²éÑ¯Óï¾ä£¬³£ÓÃselect 'x'¡£
-      # Èç¹ûvalidationQueryÎªnull£¬testOnBorrow¡¢testOnReturn¡¢testWhileIdle¶¼²»»áÆğ×÷ÓÃ¡£
+      # ç”¨æ¥æ£€æµ‹è¿æ¥æ˜¯å¦æœ‰æ•ˆçš„sqlï¼Œè¦æ±‚æ˜¯ä¸€ä¸ªæŸ¥è¯¢è¯­å¥ï¼Œå¸¸ç”¨select 'x'ã€‚
+      # å¦‚æœvalidationQueryä¸ºnullï¼ŒtestOnBorrowã€testOnReturnã€testWhileIdleéƒ½ä¸ä¼šèµ·ä½œç”¨ã€‚
       validation-query: SELECT 1
-      # ÉêÇëÁ¬½ÓÊ±Ö´ĞĞvalidationQuery¼ì²âÁ¬½ÓÊÇ·ñÓĞĞ§ Ä¬ÈÏÎªtrue
+      # ç”³è¯·è¿æ¥æ—¶æ‰§è¡ŒvalidationQueryæ£€æµ‹è¿æ¥æ˜¯å¦æœ‰æ•ˆ é»˜è®¤ä¸ºtrue
       test-on-borrow: true
-      # ¹é»¹Á¬½ÓÊ±Ö´ĞĞvalidationQuery¼ì²âÁ¬½ÓÊÇ·ñÓĞĞ§ Ä¬ÈÏÎªfalse
+      # å½’è¿˜è¿æ¥æ—¶æ‰§è¡ŒvalidationQueryæ£€æµ‹è¿æ¥æ˜¯å¦æœ‰æ•ˆ é»˜è®¤ä¸ºfalse
       test-on-return: false
-      # ÉêÇëÁ¬½ÓµÄÊ±ºò¼ì²â£¬Èç¹û¿ÕÏĞÊ±¼ä´óÓÚtimeBetweenEvictionRunsMillis£¬Ö´ĞĞvalidationQuery¼ì²âÁ¬½ÓÊÇ·ñÓĞĞ§¡£
+      # ç”³è¯·è¿æ¥çš„æ—¶å€™æ£€æµ‹ï¼Œå¦‚æœç©ºé—²æ—¶é—´å¤§äºtimeBetweenEvictionRunsMillisï¼Œæ‰§è¡ŒvalidationQueryæ£€æµ‹è¿æ¥æ˜¯å¦æœ‰æ•ˆã€‚
       test-while-idle: true
   cloud:
     nacos:
       discovery:
         server-addr: 47.106.220.141:8848
         namespace: 549f72eb-6390-4e62-8ad6-39422f8390fc
-#seataÅäÖÃ
+#seataé…ç½®
 seata:
   enabled: true
   application-id: ${spring.application.name}
-  #ÊÂÎñ×é
+  #äº‹åŠ¡ç»„
   tx-service-group: seataGroup-${seata.application-id}
   service:
     vgroup-mapping: default
-    #ÅäÖÃClientÁ¬½ÓTCµÄµØÖ·
+    #é…ç½®Clientè¿æ¥TCçš„åœ°å€
     grouplist: 47.106.220.141:8091
-    # ÊÇ·ñ½ûÓÃÈ«¾ÖÊÂÎñ
+    # æ˜¯å¦ç¦ç”¨å…¨å±€äº‹åŠ¡
     disable-global-transaction: false
   config:
     type: file
     file:
       name: file.conf
-  #nacosÖĞserver-Addr ËùÔÚµÄÃüÃû¿Õ¼ä
+  #nacosä¸­server-Addr æ‰€åœ¨çš„å‘½åç©ºé—´
   registry:
     type: nacos
     nacos:
@@ -57,10 +57,12 @@ mybatis:
   mapper-locations: classpath:sqlclient/*.xml
   type-aliases-package: cn.chenw.commonservice.model
 
-#sentinelÈÛ¶ÏÆ÷ÅäÖÃ - ¹Ø±Õ
+#sentinelç†”æ–­å™¨é…ç½® - å…³é—­
 feign:
   sentinel:
     enabled: false
+  httpclient:
+    connection-timeout: 20000
 
 logging:
   level:

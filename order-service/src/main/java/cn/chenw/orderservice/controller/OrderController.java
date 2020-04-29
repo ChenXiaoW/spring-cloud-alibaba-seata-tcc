@@ -3,6 +3,7 @@ package cn.chenw.orderservice.controller;
 import cn.chenw.commonservice.model.BaseModel;
 
 import cn.chenw.commonservice.model.dto.CreateOrderDTO;
+import cn.chenw.orderservice.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/order")
 public class OrderController {
 
+    @Autowired
+    OrderService orderService;
 
     /**
      * 创建订单
@@ -26,7 +29,7 @@ public class OrderController {
      */
     @PostMapping("/insertOrder")
     BaseModel insertOrder(@RequestBody CreateOrderDTO createOrderDTO){
-        return null;
+        return orderService.createOrder(createOrderDTO);
     }
 
 }

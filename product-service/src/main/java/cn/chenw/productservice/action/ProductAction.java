@@ -3,12 +3,14 @@ package cn.chenw.productservice.action;
 import cn.chenw.commonservice.model.poto.Product;
 import io.seata.rm.tcc.api.BusinessActionContext;
 import io.seata.rm.tcc.api.BusinessActionContextParameter;
+import io.seata.rm.tcc.api.LocalTCC;
 import io.seata.rm.tcc.api.TwoPhaseBusinessAction;
 
 /**
  * @author  chenw
  * @date  2020/4/29 15:09
  */
+@LocalTCC
 public interface ProductAction {
     /**
      * 定义两阶段提交

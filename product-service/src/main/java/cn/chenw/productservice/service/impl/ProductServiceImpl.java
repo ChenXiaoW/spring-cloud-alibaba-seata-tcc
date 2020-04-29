@@ -6,9 +6,11 @@ import cn.chenw.commonservice.util.CodeConstant;
 import cn.chenw.productservice.action.ProductAction;
 import cn.chenw.productservice.dao.ProductDao;
 import cn.chenw.productservice.service.ProductService;
+import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author  chenw
@@ -47,11 +49,14 @@ public class ProductServiceImpl implements ProductService {
      * @return
      */
     @Override
+    @Transactional
     public BaseModel updateProductStock(Product product) {
         boolean isResult = productAction.prepare(product);
         if (!isResult) {
             return new BaseModel(CodeConstant.QUERY_ERROR, CodeConstant.FAIL, "更新失败", null);
         }
-        return new BaseModel(CodeConstant.SUCCESS_CODE, CodeConstant.SUCCESS, "查询成功", null);
+        //模拟异常
+        //int i =1/0;
+        return new BaseModel(CodeConstant.SUCCESS_CODE, CodeConstant.SUCCESS, "更新成功", null);
     }
 }

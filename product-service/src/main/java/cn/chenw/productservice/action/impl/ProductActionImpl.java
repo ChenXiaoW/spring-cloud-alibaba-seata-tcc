@@ -61,7 +61,8 @@ public class ProductActionImpl implements ProductAction {
     @Override
     public boolean rollback(BusinessActionContext businessActionContext) {
         log.info("---------------------二阶段回滚执行---------------------");
-        //执行二阶段回滚前的其他操作
+        log.info("xid：{}，参数：{}",businessActionContext.getXid(),businessActionContext.getActionContext("product"));
+        //执行二阶段回滚前的其他操作,例如redis预扣除库存加回去
         return true;
     }
 }
