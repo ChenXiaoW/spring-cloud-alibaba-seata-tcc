@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.chenw.productservice.dao.ProductDao">
+
+    <!-- 查询商品信息 -->
+    <select id="queryProductById" parameterType="Product" resultType="Product" >
+        SELECT pid,pname,price,stock FROM t_product WHERE pid = #{pid}
+    </select>
+
+    <!-- 更新商品库存 -->
+    <update id="updateProductStock" parameterType="Product" >
+        UPDATE t_product SET stock = #{stock} WHERE  pid = #{pid}
+    </update>
+
+</mapper>
