@@ -41,7 +41,6 @@ public class ProductServiceImpl implements ProductService {
         return new BaseModel(CodeConstant.SUCCESS_CODE, CodeConstant.SUCCESS, "查询成功", result);
     }
 
-
     /**
      * 更新商品库存
      *
